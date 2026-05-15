@@ -77,6 +77,19 @@ El binding principal esta en `AppServiceProvider`:
 $this->app->bind(IAnimalRepository::class, EloquentAnimalRepository::class);
 ```
 
+### Observer: RegistroPesoSubject
+
+Participantes implementados:
+
+- `Subject`: `App\Observers\RegistroPesoSubject`
+- `Observer`: `App\Observers\Contracts\IRegistroPesoObserver`
+- `ConcreteObservers`: `NotificadorPropietario`, `ActualizadorDashboard`, `RecalculadorICC`, `WebhookSenasa`
+- Observador adicional sin modificar el subject: `AlertaSMS`
+
+`RegistroPesoObserver` es el observer de Eloquent que escucha el evento `saved` del modelo `RegistroPeso`. Cuando Laravel detecta un registro de peso guardado, delega en `RegistroPesoSubject`, y el subject notifica a todos los observadores GoF suscritos.
+
+La prueba `tests/Unit/RegistroPesoSubjectTest.php` demuestra que todos los observadores reciben la llamada a `onPesoRegistrado(...)` y que se puede agregar `AlertaSMS` sin cambiar `RegistroPesoSubject` ni los observadores existentes.
+
 Cuando PHP y Composer esten instalados, se puede reemplazar o completar esta base con:
 
 ```bash

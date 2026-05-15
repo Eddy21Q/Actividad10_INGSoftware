@@ -5,7 +5,12 @@ namespace App\Providers;
 use App\Factories\Contracts\IRazaFactory;
 use App\Factories\RazaFactory;
 use App\Models\RegistroPeso;
+use App\Observers\ActualizadorDashboard;
+use App\Observers\NotificadorPropietario;
+use App\Observers\RecalculadorICC;
 use App\Observers\RegistroPesoObserver;
+use App\Observers\RegistroPesoSubject;
+use App\Observers\WebhookSenasa;
 use App\Repositories\Contracts\IAnimalRepository;
 use App\Repositories\EloquentAnimalRepository;
 use App\Strategies\Peso\EstimacionPesoStrategy;
@@ -22,6 +27,16 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(IAnimalRepository::class, EloquentAnimalRepository::class);
         $this->app->bind(EstimacionPesoStrategy::class, RegresionStrategy::class);
+
+        $this->app->singleton(RegistroPesoSubject::class, function (): RegistroPesoSubject {
+            $subject = new RegistroPesoSubject();
+            $subject->suscribir(new NotificadorPropietario());
+            $subject->suscribir(new ActualizadorDashboard());
+            $subject->suscribir(new RecalculadorICC());
+            $subject->suscribir(new WebhookSenasa());
+
+            return $subject;
+        });
     }
 
     public function boot(): void

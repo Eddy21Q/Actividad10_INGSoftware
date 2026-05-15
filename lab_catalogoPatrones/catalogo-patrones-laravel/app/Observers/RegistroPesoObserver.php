@@ -6,9 +6,14 @@ use App\Models\RegistroPeso;
 
 class RegistroPesoObserver
 {
+    public function __construct(
+        private RegistroPesoSubject $subject
+    ) {
+    }
+
     public function saved(RegistroPeso $registroPeso): void
     {
-        // Centraliza efectos secundarios: notificar, actualizar dashboard, recalcular ICC y webhooks.
+        $this->subject->notificar($registroPeso);
     }
 }
 
