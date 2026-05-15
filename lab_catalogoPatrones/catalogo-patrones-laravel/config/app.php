@@ -11,8 +11,4 @@ return [
     'faker_locale' => 'es_ES',
     'key' => env('APP_KEY'),
     'cipher' => 'AES-256-CBC',
-    'providers' => [
-        App\Providers\AppServiceProvider::class,
-    ],
 ];
-
