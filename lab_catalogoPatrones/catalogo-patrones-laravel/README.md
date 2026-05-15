@@ -56,6 +56,27 @@ La factory usa un mapa asociativo definido en `config/razas.php`, por lo que no 
 Se registro en el Service Container como singleton en `AppServiceProvider`.
 Los controladores `AnimalController` y `RazaController` muestran dos puntos de creacion usando inyeccion de dependencias.
 
+### Repository: AnimalRepository
+
+Participantes implementados:
+
+- `Repository Interface`: `App\Repositories\Contracts\IAnimalRepository`
+- `Concrete Repository`: `App\Repositories\EloquentAnimalRepository`
+- `In-Memory Repository`: `App\Repositories\InMemoryAnimalRepository`
+
+Metodos de dominio:
+
+- `findByArete(string $arete): ?Animal`
+- `findAllByRancho(int $ranchoId): Collection`
+- `save(Animal $animal): void`
+
+`ReporteService` recibe `IAnimalRepository` por constructor, por lo que no llama a `Animal::where(...)` directamente.
+El binding principal esta en `AppServiceProvider`:
+
+```php
+$this->app->bind(IAnimalRepository::class, EloquentAnimalRepository::class);
+```
+
 Cuando PHP y Composer esten instalados, se puede reemplazar o completar esta base con:
 
 ```bash

@@ -6,7 +6,7 @@ use App\Factories\Contracts\IRazaFactory;
 use App\Factories\RazaFactory;
 use App\Models\RegistroPeso;
 use App\Observers\RegistroPesoObserver;
-use App\Repositories\Contracts\AnimalRepositoryInterface;
+use App\Repositories\Contracts\IAnimalRepository;
 use App\Repositories\EloquentAnimalRepository;
 use App\Strategies\Peso\EstimacionPesoStrategy;
 use App\Strategies\Peso\RegresionStrategy;
@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
             return new RazaFactory(config('razas'));
         });
 
-        $this->app->bind(AnimalRepositoryInterface::class, EloquentAnimalRepository::class);
+        $this->app->bind(IAnimalRepository::class, EloquentAnimalRepository::class);
         $this->app->bind(EstimacionPesoStrategy::class, RegresionStrategy::class);
     }
 
