@@ -90,6 +90,21 @@ Participantes implementados:
 
 La prueba `tests/Unit/RegistroPesoSubjectTest.php` demuestra que todos los observadores reciben la llamada a `onPesoRegistrado(...)` y que se puede agregar `AlertaSMS` sin cambiar `RegistroPesoSubject` ni los observadores existentes.
 
+### Strategy: Algoritmos de Estimacion de Peso
+
+Participantes implementados:
+
+- `Strategy`: `App\Strategies\Peso\IAlgoritmoEstimacion`
+- `ConcreteStrategies`: `AlgoritmoYolov8`, `AlgoritmoRegresionLineal`, `AlgoritmoTablaReferencia`
+- `Context`: `App\Services\EstimadorPesoService`
+- `Value Object`: `App\Strategies\Peso\ResultadoEstimacion`
+
+`EstimadorPesoService` recibe un `IAlgoritmoEstimacion` por constructor y su metodo `estimar(...)` solo delega en `ejecutar(...)`, por lo que no contiene bloques `if-else` para seleccionar algoritmos.
+
+`ResultadoEstimacion` es un value object readonly con `pesoKg`, `confianzaPorcentaje` y `metodoUsado`.
+
+La prueba `tests/Unit/EstimadorPesoServiceTest.php` muestra que el contexto puede cambiar de algoritmo en tiempo de ejecucion. Cuando no hay conexion con YOLOv8, se inyecta `AlgoritmoTablaReferencia` como fallback sin modificar `EstimadorPesoService`.
+
 Cuando PHP y Composer esten instalados, se puede reemplazar o completar esta base con:
 
 ```bash

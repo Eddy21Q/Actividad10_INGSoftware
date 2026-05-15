@@ -2,11 +2,7 @@
 
 namespace App\Strategies\Peso;
 
-class TablaStrategy implements EstimacionPesoStrategy
+class TablaStrategy extends AlgoritmoTablaReferencia
 {
-    public function estimar(array $datos): float
-    {
-        return (float) ($datos['peso_tabla'] ?? 0);
-    }
 }
 

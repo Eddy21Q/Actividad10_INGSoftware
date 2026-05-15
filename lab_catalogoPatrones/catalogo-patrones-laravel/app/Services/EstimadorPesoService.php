@@ -2,18 +2,19 @@
 
 namespace App\Services;
 
-use App\Strategies\Peso\EstimacionPesoStrategy;
+use App\Strategies\Peso\IAlgoritmoEstimacion;
+use App\Strategies\Peso\ResultadoEstimacion;
 
 class EstimadorPesoService
 {
     public function __construct(
-        private EstimacionPesoStrategy $strategy
+        private IAlgoritmoEstimacion $algoritmo
     ) {
     }
 
-    public function estimar(array $datos): float
+    public function estimar(array $datos): ResultadoEstimacion
     {
-        return $this->strategy->estimar($datos);
+        return $this->algoritmo->ejecutar($datos);
     }
 }
 

@@ -2,8 +2,7 @@
 
 namespace App\Strategies\Peso;
 
-interface EstimacionPesoStrategy
+interface EstimacionPesoStrategy extends IAlgoritmoEstimacion
 {
-    public function estimar(array $datos): float;
 }
 

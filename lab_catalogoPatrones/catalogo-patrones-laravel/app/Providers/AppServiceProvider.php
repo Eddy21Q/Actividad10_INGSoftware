@@ -13,7 +13,9 @@ use App\Observers\RegistroPesoSubject;
 use App\Observers\WebhookSenasa;
 use App\Repositories\Contracts\IAnimalRepository;
 use App\Repositories\EloquentAnimalRepository;
+use App\Strategies\Peso\AlgoritmoRegresionLineal;
 use App\Strategies\Peso\EstimacionPesoStrategy;
+use App\Strategies\Peso\IAlgoritmoEstimacion;
 use App\Strategies\Peso\RegresionStrategy;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(IAnimalRepository::class, EloquentAnimalRepository::class);
+        $this->app->bind(IAlgoritmoEstimacion::class, AlgoritmoRegresionLineal::class);
         $this->app->bind(EstimacionPesoStrategy::class, RegresionStrategy::class);
 
         $this->app->singleton(RegistroPesoSubject::class, function (): RegistroPesoSubject {
