@@ -1,0 +1,24 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+main {
+    width: min(960px, calc(100% - 32px));
+    margin: 48px auto;
+}
+
+.pattern-list {
+    display: grid;
+    gap: 16px;
+}
+
+.pattern-card {
+    background: #ffffff;
+    border: 1px solid #d8deea;
+    border-radius: 8px;
+    padding: 20px;
+}
+
